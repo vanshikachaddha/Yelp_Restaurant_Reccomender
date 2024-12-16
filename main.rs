@@ -4,7 +4,8 @@
     DUE: DEC 15, 2022
 */
 
-
+#[cfg(test)]
+mod tests;
 pub mod make_graphs;
 use make_graphs::read_reviews;
 use std::collections::{HashMap, HashSet};

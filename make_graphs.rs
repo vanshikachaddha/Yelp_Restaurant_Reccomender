@@ -207,7 +207,6 @@ pub fn restaurant_recommender(
     adjacency_matrix: &HashMap<String, Vec<usize>>,
     business_index_to_name: &HashMap<usize, String>,
 ) -> Vec<String> {
-    // Step 1: Get businesses reviewed by the target user
     let reviewed_businesses: HashSet<usize> = adjacency_matrix
         .get(user_id)
         .unwrap_or_else(|| panic!("User ID {} not found in adjacency matrix", user_id))
@@ -216,7 +215,6 @@ pub fn restaurant_recommender(
         .filter_map(|(index, &value)| if value == 1 { Some(index) } else { None })
         .collect();
 
-    // Step 2: Aggregate scores for businesses reviewed by similar users
     let mut candidate_scores: HashMap<usize, f64> = HashMap::new();
     for (&(ref user_a, ref user_b), &similarity) in similarity_scores {
         // Skip irrelevant pairs
@@ -228,7 +226,6 @@ pub fn restaurant_recommender(
             continue; // Skip if neither user matches
         };
 
-        // Retrieve the similar user's vector
         if let Some(similar_user_vector) = adjacency_matrix.get(similar_user) {
             for (business_index, &value) in similar_user_vector.iter().enumerate() {
                 if value == 1 && !reviewed_businesses.contains(&business_index) {
@@ -239,11 +236,9 @@ pub fn restaurant_recommender(
         }
     }
 
-    // Step 3: Convert to vector and sort
     let mut ranked_businesses: Vec<(usize, f64)> = candidate_scores.into_iter().collect();
     ranked_businesses.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
 
-    // Step 4: Map to business names and return top 10
     ranked_businesses
         .into_iter()
         .take(10) // Limit to top 10 results

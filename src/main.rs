@@ -12,8 +12,8 @@ use std::collections::{HashMap, HashSet};
 use make_graphs::{read_business_names, good_make_graph, bad_make_graph, top_restaurants, top_reviewers, top_nodes, create_adjacency_matrix, cosine_similarity, calculate_user_similarity, restaurant_recommender, precompute_norms};
 
 fn main() {
-    let reviews_path = "CSV_Dataset/filtered_reviews.csv";
-    let business_names_path = "CSV_Dataset/filtered_restaurants.csv";
+    let reviews_path = "CSV_Dataset/Archive/filtered_reviews.csv";
+    let business_names_path = "CSV_Dataset/Archive/filtered_restaurants.csv";
     let reviews = read_reviews(reviews_path).unwrap();
     let business_names = read_business_names(business_names_path).unwrap();
 

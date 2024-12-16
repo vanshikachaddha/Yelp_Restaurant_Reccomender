@@ -4,6 +4,7 @@ use std::error::Error;
 use itertools::Itertools;
 #[derive(Debug)]
 
+
 // Nodes: Users and Businesses
 pub struct Graph {
     pub users: HashSet<String>,
